@@ -1,39 +1,27 @@
 # Uses python3
 import sys
 from collections import namedtuple
+from itertools import chain
 
 Segment = namedtuple('Segment', 'start end')
 
 
 def fast_count_segments(starts, ends, points):
-    # segments.sort(key= lambda x : x.end)
-
     cnt = [0] * len(points)
+    starts = zip(starts, ['l'] * len(starts), range(len(starts)))
+    ends = zip(ends, ['r'] * len(ends), range(len(ends)))
+    points = zip(points, ['p'] * len(points), range(len(points)))
 
-    starts.sort()
-    ends.sort()
-
-    points.sort()
-
-    upper_segment = []
-    lower_segment = []
-
-    for point in points:
-        for start in starts:
-            if point < start:
-                break
-            elif point >= start:
-                upper_segment.append(point)
-
-    for point in points:
-        for end in ends:
-            if point > end:
-                break
-            elif point <= end:
-                lower_segment.append(point)
-    print(lower_segment)
-    print(upper_segment)
-
+    sort_list = chain(starts, ends, points)
+    sort_list = sorted(sort_list)
+    i = 0
+    for num, letter, index in sort_list:
+        if letter == 'l':
+            i += 1
+        elif letter == 'r':
+            i -= 1
+        else:
+            cnt[index] = i
     return cnt
 
 
@@ -58,5 +46,6 @@ if __name__ == '__main__':
     # use fast_count_segments
     # cnt = naive_count_segments(starts, ends, points)
     cnt = fast_count_segments(starts, ends, points)
+    # cnt = fast_count_segments([-3, 0, 7], [2, 5, 10], [1, 6])
     for x in cnt:
         print(x, end=' ')
