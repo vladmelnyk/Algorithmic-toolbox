@@ -62,6 +62,8 @@ def closest_split_pair(points_x_sorted, points_y_sorted, delta):
     for i in range(ln_y - 1):
         for j in range(i + 1, min(i + 7, ln_y)):
             p, q = s_y[i], s_y[j]
+            if q[1] - p[1] > best:
+                break
             dst = calc_dist(p, q)
             if dst < best:
                 best = dst
