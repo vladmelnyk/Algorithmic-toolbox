@@ -1,10 +1,24 @@
-#Uses python3
+# Uses python3
 
+import numpy as np
 import sys
 
+
 def lcs2(a, b):
-    #write your code here
-    return min(len(a), len(b))
+    temp = np.zeros(shape=(len(a) + 1, len(b) + 1), dtype=int)
+    max = 0
+
+    for i in range(1, len(a) + 1):
+        for j in range(1, len(b) + 1):
+            if a[i - 1] == b[j - 1]:
+                temp[i, j] = 1 + temp[i - 1, j - 1]
+                if max < temp[i, j]:
+                    max = temp[i, j]
+            else:
+                temp[i, j] = 0
+
+    return max
+
 
 if __name__ == '__main__':
     input = sys.stdin.read()
@@ -20,3 +34,5 @@ if __name__ == '__main__':
     b = data[:m]
 
     print(lcs2(a, b))
+
+    # print(lcs2("commo", "mmorpg"))
