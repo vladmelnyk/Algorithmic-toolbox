@@ -53,7 +53,7 @@ def optimal_sequence(m):
 
 
 if __name__ == '__main__':
-    input = sys.stdin.read()
+    input = sys.stdin.readline()
     n = int(input)
     sequence = list(optimal_sequence(n))
     print(len(sequence) - 1)
